@@ -7,3 +7,6 @@ def main():
     #GPIO.setup(17, GPIO.OUT, initial=GPIO.HIGH)
 
     GPIO.cleanup()
+
+if __name__ == '__main__':
+    main()
