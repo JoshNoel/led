@@ -1,11 +1,10 @@
 import sys
-
+import RPIO
 from led_controller import *
 
 
-
 def main(path):
-    print("PI REvision: " + GPIO.RPI_INFO['P1_REVISION'])
+    print("PI Revision: " + RPIO.RPI_INFO['P1_REVISION'])
     file = open(path, 'r')
     control_string = file.read()
     file.close()
