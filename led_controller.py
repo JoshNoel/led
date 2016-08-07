@@ -14,15 +14,15 @@ class LedController:
         self.led_map = {self.LED_COLOR.RED:[red_GPIO, False],self.LED_COLOR.BLUE:[blue_GPIO, False],
                         self.LED_COLOR.GREEN:[green_GPIO, False]}
         self.control_list = control_list.split(" : ")
-        print(self.control_list)
         for i in range(len(self.control_list)):
             self.control_list[i] = self.control_list[i].split('-')
             if self.control_list[i][0] == "Red":
-                self.control_list[i][0] == self.LED_COLOR.RED
+                self.control_list[i][0] = self.LED_COLOR.RED
             if self.control_list[i][0] == "Green":
-                self.control_list[i][0] == self.LED_COLOR.GREEN
+                self.control_list[i][0] = self.LED_COLOR.GREEN
             if self.control_list[i][0] == "Blue":
-                self.control_list[i][0] == self.LED_COLOR.BLUE
+                self.control_list[i][0] = self.LED_COLOR.BLUE
+            self.control_list[i][1] = float(self.control_list[i][1])
 
         RPIO.setmode(RPIO.BCM)
         RPIO.setwarnings(False)
@@ -39,13 +39,16 @@ class LedController:
 
     def __toggleLED(self, LED_COLOR):
         if self.led_map[LED_COLOR][0] != -1:
-            RPIO.output(self.led_map[LED_COLOR][0], not self.led_map[LED_COLOR][1])
+            self.led_map[LED_COLOR][1] = not self.led_map[LED_COLOR][1]
+            RPIO.output(self.led_map[LED_COLOR][0], self.led_map[LED_COLOR][1])
+            print(str(self.led_map[LED_COLOR][0]) + ":" + str(self.led_map[LED_COLOR][1]))
 
     def runControlList(self):
         it = 0
         start = time.clock()
         while it < len(self.control_list):
             if time.clock() - start > self.control_list[it][1]:
+                self.__toggleLED(self.control_list[it][0])
                 it += 1
-                self.toggleLED(self.control_list[it][0])
+
 
