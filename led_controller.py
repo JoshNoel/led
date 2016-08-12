@@ -1,5 +1,5 @@
 from enum import Enum
-import RPIO
+import RPi.GPIO as GPIO
 import time
 
 
@@ -24,23 +24,29 @@ class LedController:
                 self.control_list[i][0] = self.LED_COLOR.BLUE
             self.control_list[i][1] = float(self.control_list[i][1])
 
-        RPIO.setmode(RPIO.BCM)
-        RPIO.setwarnings(False)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
 
         if red_GPIO != -1:
-            RPIO.setup(red_GPIO, RPIO.OUT, initial=RPIO.LOW)
+            GPIO.setup(red_GPIO, GPIO.OUT, initial=GPIO.LOW)
         if green_GPIO != -1:
-            RPIO.setup(green_GPIO, RPIO.OUT, initial=RPIO.LOW)
+            GPIO.setup(green_GPIO, GPIO.OUT, initial=GPIO.LOW)
         if blue_GPIO != -1:
-            RPIO.setup(blue_GPIO, RPIO.OUT, initial=RPIO.LOW)
+            GPIO.setup(blue_GPIO, GPIO.OUT, initial=GPIO.LOW)
 
     def __del__(self):
-        RPIO.cleanup()
+        GPIO.cleanup()
+
+    def __outputGPIO(self, channel, state):
+        if state == False:
+            GPIO.output(channel, GPIO.LOW)
+        elif state == True:
+            GPIO.output(channel, GPIO.HIGH)
 
     def __toggleLED(self, LED_COLOR):
         if self.led_map[LED_COLOR][0] != -1:
             self.led_map[LED_COLOR][1] = not self.led_map[LED_COLOR][1]
-            RPIO.output(self.led_map[LED_COLOR][0], self.led_map[LED_COLOR][1])
+            self.__outputGPIO(self.led_map[LED_COLOR][0], self.led_map[LED_COLOR][1])
             print(str(self.led_map[LED_COLOR][0]) + ":" + str(self.led_map[LED_COLOR][1]))
 
     def runControlList(self):
