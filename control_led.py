@@ -14,7 +14,7 @@ def main(path, red_pin, green_pin, blue_pin):
 
 if __name__ == '__main__':
     path = sys.argv[1]
-    red_gpio = sys.argv[2]
-    green_gpio = sys.argv[3]
-    blue_gpio = sys.argv[4]
+    red_gpio = int(sys.argv[2])
+    green_gpio = int(sys.argv[3])
+    blue_gpio = int(sys.argv[4])
     main(path, red_gpio, green_gpio, blue_gpio)
