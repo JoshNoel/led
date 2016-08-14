@@ -91,7 +91,7 @@ def proc_vid(vid_path):
 if __name__ == '__main__':
     file_name = "./control_lists/" + sys.argv[2] + ".clist"
     vid_path = sys.argv[1]
-    control_list = proc_vid()
+    control_list = proc_vid(vid_path)
     file = open(file_name, 'w+')
     if len(control_list) > 0:
         file.write(" : ".join(control_list))
