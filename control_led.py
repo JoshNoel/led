@@ -4,7 +4,7 @@ from led_controller import *
 
 
 def main(path):
-    print("PI Revision: " + GPIO.RPI_INFO['P1_REVISION'])
+    print("PI Revision: " + str(GPIO.RPI_INFO['P1_REVISION']))
     file = open(path, 'r')
     control_string = file.read()
     file.close()
