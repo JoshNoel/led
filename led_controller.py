@@ -10,7 +10,7 @@ class LedController:
         BLUE = 3
 
         ### control_list : [[color, start_time, end_time], ...]
-    def __init__(self, red_GPIO, blue_GPIO, green_GPIO, control_list):
+    def __init__(self, red_GPIO, green_GPIO, blue_GPIO, control_list):
         self.led_map = {self.LED_COLOR.RED:[red_GPIO, False],self.LED_COLOR.BLUE:[blue_GPIO, False],
                         self.LED_COLOR.GREEN:[green_GPIO, False]}
         self.control_list = control_list.split(" : ")

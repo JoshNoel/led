@@ -3,14 +3,18 @@ import RPi.GPIO as GPIO
 from led_controller import *
 
 
-def main(path):
+def main(path, red_pin, green_pin, blue_pin):
     print("PI Revision: " + str(GPIO.RPI_INFO['P1_REVISION']))
     file = open(path, 'r')
     control_string = file.read()
     file.close()
-    led_controller = LedController(17, -1, -1, control_string)
+    led_controller = LedController(red_pin, green_pin, blue_pin, control_string)
     led_controller.runControlList()
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    path = sys.argv[1]
+    red_gpio = sys.argv[2]
+    green_gpio = sys.argv[3]
+    blue_gpio = sys.argv[4]
+    main(path, red_gpio, green_gpio, blue_gpio)
